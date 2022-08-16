@@ -82,3 +82,14 @@ resource "aws_instance" "instance_node" {
     { "kubespray-role" : "kube_node" }
   )
 }
+
+resource "local_file" "inventory_hosts" {
+  content = templatefile("templates/inventory.ini.tpl", {
+    master_hosts = "%{for index, host in aws_instance.instance_controlplane.*}challengekt-cp${index} ansible_host=${host.public_ip} ansible_user='admin' ansible_ssh_private_key_file='../terraform/out/sshkey'\n%{endfor}",
+    node_hosts   = "%{for index, host in aws_instance.instance_node.*}challengekt-node${index} ansible_host=${host.public_ip} ansible_user='admin' ansible_ssh_private_key_file='../terraform/out/sshkey'\n%{endfor}",
+    master_index = "%{for index, host in aws_instance.instance_controlplane.*}challengekt-cp${index}\n%{endfor}"
+    nodes_index  = "%{for index, host in aws_instance.instance_node.*}challengekt-node${index}\n%{endfor}"
+  })
+  filename        = "../ansible/inventory/hosts.ini"
+  file_permission = "0400"
+}

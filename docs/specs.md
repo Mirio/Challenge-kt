@@ -14,12 +14,26 @@ Subnet B (public): `192.168.50.208/28`
 
 Subnet C (public): `192.168.50.224/28`
 
+Subnet Service POD (into k8s): `10.233.0.0/18`
+
+Subnet POD (into k8s): `10.233.64.0/18`
 
 # Operation System
 
-OS: `Debian 11`
+Os: `Debian 11`
 
-ARCH: `amd64`
+Arch: `amd64`
 
-VERSION: `Latest Official AMI`
+Version: `Latest Official AMI`
 
+# Kubernetes Specs
+
+Version: `1.23.7`
+
+Network Addon: `Calico`
+
+Addons:
+* `Cert Manager`
+* `Helm`
+* `Ingress ALB`
+* `Metrics Server`

@@ -145,10 +145,10 @@ resource "aws_security_group" "main_sg_controlplan" {
   }
 
   ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    description = "Allow all traffic from nodes"
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "ALL"
     cidr_blocks = [var.network_cidr]
   }
 
@@ -177,10 +177,10 @@ resource "aws_security_group" "main_sg_node" {
   }
 
   ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
+    description = "Allow all traffic from nodes"
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "ALL"
     cidr_blocks = [var.network_cidr]
   }
 
