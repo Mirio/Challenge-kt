@@ -9,3 +9,4 @@ argo_configs:
   - "argocd-generickustomize.yml"
   - "argocd-mysql.yml"
   - "argocd-redis.yml"
+  - "argocd-wordpress.yml"

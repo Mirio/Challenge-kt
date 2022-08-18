@@ -95,7 +95,7 @@ rbd_provisioner_enabled: false
 # rbd_provisioner_reclaim_policy: Delete
 
 # Nginx ingress controller deployment
-ingress_nginx_enabled: false
+ingress_nginx_enabled: true
 # ingress_nginx_host_network: false
 ingress_publish_status_address: ""
 # ingress_nginx_nodeselector:
@@ -125,16 +125,16 @@ ingress_publish_status_address: ""
 # ingress_nginx_class: nginx
 
 # ALB ingress controller deployment
-ingress_alb_enabled: true
+ingress_alb_enabled: false
 #alb_ingress_image_tag: "v2.4.3"
-alb_ingress_aws_region: "eu-central-1"
+#alb_ingress_aws_region: "eu-central-1"
 # alb_ingress_restrict_scheme: "false"
 # Enables logging on all outbound requests sent to the AWS API.
 # If logging is desired, set to true.
-alb_ingress_aws_debug: "true"
+#alb_ingress_aws_debug: "true"
 
 # Cert manager deployment
-cert_manager_enabled: true
+cert_manager_enabled: false
 # cert_manager_namespace: "cert-manager"
 # cert_manager_tolerations:
 #   - key: node-role.kubernetes.io/master
