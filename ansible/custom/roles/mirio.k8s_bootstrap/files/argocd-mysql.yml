@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: generic-kustomize
+  name: mysql
   namespace: argocd
 spec:
+  destination:
+    namespace: kiratech-test
+    server: "https://kubernetes.default.svc"
   source:
-    path: argocd/kustomize
-    repoURL: "https://github.com/Mirio/Challenge-kt"
+    path: argocd/helm/bitnami-mysql
+    repoURL: "https://github.com/Mirio/Challenge-kt.git"
     targetRevision: HEAD
   project: default
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-  destination:
-    namespace: "default"
-    server: "https://kubernetes.default.svc"

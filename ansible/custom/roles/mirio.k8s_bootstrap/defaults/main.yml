@@ -7,4 +7,4 @@ kubebench_namespace: "default"
 
 argo_configs:
   - "argocd-generickustomize.yml"
-  - "argocd-helm.yml"
+  - "argocd-mysql.yml"

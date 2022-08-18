@@ -22,9 +22,10 @@
   become: true
 
 - name: "Configure ArgoCD"
-  ansible.builtin.command: "kubectl apply -f {{ kubebench_yaml }}"
-  register: kubebench_apply
-  changed_when: kubebench_apply.stdout == "job.batch/kube-bench created"
+  ansible.builtin.command: "kubectl apply -f {{ tmp_dir.path }}/{{ item }}"
+  with_items: "{{ argo_configs }}"
+  register: "argocd_applyconfig"
+  changed_when: "'created' in argocd_applyconfig.stdout"
   become: true
 
 - name: "Cleanup temporary directory"
