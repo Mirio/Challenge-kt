@@ -8,3 +8,4 @@ kubebench_namespace: "default"
 argo_configs:
   - "argocd-generickustomize.yml"
   - "argocd-mysql.yml"
+  - "argocd-redis.yml"
