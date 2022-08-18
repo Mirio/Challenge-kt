@@ -32,7 +32,7 @@ fullnameOverride: ""
 namespaceOverride: ""
 ## @param clusterDomain Cluster domain
 ##
-clusterDomain: cluster.local
+clusterDomain: kubernetes-challengekt.local
 ## @param commonAnnotations Common annotations to add to all MySQL resources (sub-charts are not considered). Evaluated as a template
 ##
 commonAnnotations: {}
@@ -91,7 +91,7 @@ image:
   debug: false
 ## @param architecture MySQL architecture (`standalone` or `replication`)
 ##
-architecture: standalone
+architecture: replication
 ## MySQL Authentication parameters
 ##
 auth:
@@ -106,14 +106,14 @@ auth:
   ## @param auth.database Name for a custom database to create
   ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#creating-a-database-on-first-run
   ##
-  database: "kiratechtest"
+  database: "wordpress"
   ## @param auth.username Name for a custom user to create
   ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#creating-a-database-user-on-first-run
   ##
-  username: ""
+  username: "wordpress"
   ## @param auth.password Password for the new user. Ignored if existing secret is provided
   ##
-  password: ""
+  password: "wordpress"
   ## @param auth.replicationUser MySQL replication user
   ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mysql#setting-up-a-replication-cluster
   ##
