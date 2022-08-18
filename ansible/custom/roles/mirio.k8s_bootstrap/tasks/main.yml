@@ -1,0 +1,34 @@
+---
+# tasks file for k8s_bootstrap
+- name: "Install KubeBench into cluster"
+  ansible.builtin.command: "kubectl apply -f {{ kubebench_yaml }}"
+  register: kubebench_apply
+  changed_when: kubebench_apply.stdout == "job.batch/kube-bench created"
+  become: true
+
+- name: "Create temporary dir for manipulate data"
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: "tmpdir"
+  register: "tmp_dir"
+  become: true
+
+- name: "Upload ArgoCD configs"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ tmp_dir.path }}/{{ item }}"
+    mode: "0644"
+  with_items: "{{ argo_configs }}"
+  become: true
+
+- name: "Configure ArgoCD"
+  ansible.builtin.command: "kubectl apply -f {{ kubebench_yaml }}"
+  register: kubebench_apply
+  changed_when: kubebench_apply.stdout == "job.batch/kube-bench created"
+  become: true
+
+- name: "Cleanup temporary directory"
+  ansible.builtin.file:
+    path: "{{ tmp_dir.path }}"
+    state: absent
+  become: true

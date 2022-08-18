@@ -130,6 +130,11 @@ resource "aws_route_table_association" "main_rt_publicc_asso" {
   route_table_id = aws_route_table.main_rt_public.id
 }
 
+# Security Groups default restricts all traffic
+resource "aws_default_security_group" "default_sg_restrict" {
+  vpc_id = aws_vpc.main_vpc.id
+}
+
 # Security Groups
 resource "aws_security_group" "main_sg_controlplan" {
   name        = "CHALLENGEKT_EC2_CONTROLPLANE"
@@ -145,10 +150,34 @@ resource "aws_security_group" "main_sg_controlplan" {
   }
 
   ingress {
+    description = "Kubectl access"
+    from_port   = 6443
+    to_port     = 6443
+    protocol    = "tcp"
+    cidr_blocks = var.allowed_ip
+  }
+
+  ingress {
+    description = "HTTP Access"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS Access"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Allow all traffic from nodes"
     from_port   = 0
-    to_port     = 65535
-    protocol    = "ALL"
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = [var.network_cidr]
   }
 
@@ -179,8 +208,8 @@ resource "aws_security_group" "main_sg_node" {
   ingress {
     description = "Allow all traffic from nodes"
     from_port   = 0
-    to_port     = 65535
-    protocol    = "ALL"
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = [var.network_cidr]
   }
 

@@ -1,0 +1,10 @@
+---
+# defaults file for k8s_bootstrap
+adminuser: "admin"
+kubebench_version: "v0.6.9"
+kubebench_yaml: "https://raw.githubusercontent.com/aquasecurity/kube-bench/{{ kubebench_version }}/job.yaml"
+kubebench_namespace: "default"
+
+argo_configs:
+  - "argocd-generickustomize.yml"
+  - "argocd-helm.yml"

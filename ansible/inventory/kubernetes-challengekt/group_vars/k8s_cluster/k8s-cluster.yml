@@ -164,7 +164,7 @@ dns_mode: coredns
 # Set manual server if using a custom cluster DNS server
 # manual_dns_server: 10.x.x.x
 # Enable nodelocal dns cache
-enable_nodelocaldns: true
+enable_nodelocaldns: false
 enable_nodelocaldns_secondary: false
 nodelocaldns_ip: 169.254.25.10
 nodelocaldns_health_port: 9254
@@ -191,7 +191,7 @@ coredns_k8s_external_zone: k8s_external.local
 enable_coredns_k8s_endpoint_pod_names: false
 
 # Can be docker_dns, host_resolvconf or none
-resolvconf_mode: host_resolvconf
+resolvconf_mode: docker_dns
 # Deploy netchecker app to verify DNS resolve as an HTTP service
 deploy_netchecker: false
 # Ip address of the kubernetes skydns service
@@ -236,9 +236,9 @@ podsecuritypolicy_enabled: false
 # podsecuritypolicy_privileged_spec: {}
 
 # Make a copy of kubeconfig on the host that runs Ansible in {{ inventory_dir }}/artifacts
-# kubeconfig_localhost: false
+kubeconfig_localhost: true
 # Use ansible_host as external api ip when copying over kubeconfig.
-# kubeconfig_localhost_ansible_host: false
+kubeconfig_localhost_ansible_host: true
 # Download kubectl onto the host that runs Ansible in {{ bin_dir }}
 # kubectl_localhost: false
 
@@ -265,7 +265,7 @@ podsecuritypolicy_enabled: false
 
 ## Supplementary addresses that can be added in kubernetes ssl keys.
 ## That can be useful for example to setup a keepalived virtual IP
-# supplementary_addresses_in_ssl_keys: [10.0.0.1, 10.0.0.2, 10.0.0.3]
+supplementary_addresses_in_ssl_keys: ["{{ ansible_host }}"]
 
 ## Running on top of openstack vms with cinder enabled may lead to unschedulable pods due to NoVolumeZoneConflict restriction in kube-scheduler.
 ## See https://github.com/kubernetes-sigs/kubespray/issues/2141

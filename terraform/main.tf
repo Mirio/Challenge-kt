@@ -33,9 +33,10 @@ resource "aws_instance" "instance_controlplane" {
   key_name               = aws_key_pair.main_keypair.key_name
   vpc_security_group_ids = [aws_security_group.main_sg_controlplan.id]
   iam_instance_profile   = aws_iam_role.iam_controlplane_role.id
+  ebs_optimized          = true
   metadata_options {
     http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_tokens   = "optional"
   }
   root_block_device {
     delete_on_termination = true
@@ -57,6 +58,7 @@ resource "aws_instance" "instance_node" {
   ami           = data.aws_ami.instance_ami.id
   instance_type = var.instance_node_type
   # To be deactivated/switch to private net in production or setup a bastion host on top
+  #checkov:skip=CKV_AWS_88
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.subnet_public_b.id
   # To be deactivated/switch to private net in production or setup a bastion host on top
@@ -64,9 +66,10 @@ resource "aws_instance" "instance_node" {
   key_name               = aws_key_pair.main_keypair.key_name
   vpc_security_group_ids = [aws_security_group.main_sg_node.id]
   iam_instance_profile   = aws_iam_role.iam_node_role.id
+  ebs_optimized          = true
   metadata_options {
     http_endpoint = "enabled"
-    http_tokens   = "required"
+    http_tokens   = "optional"
   }
   root_block_device {
     delete_on_termination = true
@@ -85,11 +88,11 @@ resource "aws_instance" "instance_node" {
 
 resource "local_file" "inventory_hosts" {
   content = templatefile("templates/inventory.ini.tpl", {
-    master_hosts = "%{for index, host in aws_instance.instance_controlplane.*}challengekt-cp${index} ansible_host=${host.public_ip} ansible_user='admin' ansible_ssh_private_key_file='../terraform/out/sshkey'\n%{endfor}",
-    node_hosts   = "%{for index, host in aws_instance.instance_node.*}challengekt-node${index} ansible_host=${host.public_ip} ansible_user='admin' ansible_ssh_private_key_file='../terraform/out/sshkey'\n%{endfor}",
-    master_index = "%{for index, host in aws_instance.instance_controlplane.*}challengekt-cp${index}\n%{endfor}"
-    nodes_index  = "%{for index, host in aws_instance.instance_node.*}challengekt-node${index}\n%{endfor}"
+    master_hosts = "%{for host in aws_instance.instance_controlplane.*}${host.private_dns} ansible_host=${host.public_ip} ansible_user='admin' ansible_ssh_private_key_file='../terraform/out/sshkey'\n%{endfor}",
+    node_hosts   = "%{for host in aws_instance.instance_node.*}${host.private_dns} ansible_host=${host.public_ip} ansible_user='admin' ansible_ssh_private_key_file='../terraform/out/sshkey'\n%{endfor}",
+    master_index = "%{for host in aws_instance.instance_controlplane.*}${host.private_dns}\n%{endfor}"
+    nodes_index  = "%{for host in aws_instance.instance_node.*}${host.private_dns}\n%{endfor}"
   })
-  filename        = "../ansible/inventory/hosts.ini"
-  file_permission = "0400"
+  filename        = "../ansible/inventory/kubernetes-challengekt/hosts.ini"
+  file_permission = "0600"
 }

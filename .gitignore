@@ -65,5 +65,8 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/terraform,terragrunt,ansible,venv
 terraform/.terraform.lock.hcl
 terraform/out/*
-
-ansible/inventory/hosts.ini
+ansible/venv/*
+ansible/ansible_run.txt
+ansible/inventory/kubernetes-challengekt/hosts.ini
+ansible/inventory/kubernetes-challengekt/artifacts/*
+ansible/inventory/kubernetes-challengekt/credentials/*

@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: generic-kustomize
+  namespace: argocd
+spec:
+  source:
+    path: argocd/kustomize
+    repoURL: "https://github.com/Mirio/Challenge-kt"
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  destination:
+    name: ""
+    namespace: "default"
+    server: "https://kubernetes.default.svc"

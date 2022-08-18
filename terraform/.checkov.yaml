@@ -1,0 +1,12 @@
+compact: true
+download-external-modules: true
+evaluate-variables: true
+framework:
+  - all
+output: cli
+quiet: true
+skip-check:
+  - CKV_AWS_88 # Public IP needed for this challenge, this can be tuned
+  - CKV_AWS_126 # Detailed monitoring not needed for the lab
+  - CKV2_AWS_11 # VPC Flow not needed for the lab
+soft-fail: true
