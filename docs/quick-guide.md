@@ -3,6 +3,7 @@
 Jump on the `terraform` directory.
 
 * Edit `variables.tf` and insert your IP in the variable `allowed_ip`
+* Edit `backend.tf` and insert your s3 bucket for the terraform state
 * Do a `terraform init && terraform apply -auto-approve` 
 
 ## Ansible Steps
