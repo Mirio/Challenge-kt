@@ -29,5 +29,5 @@ else
     sed -i 's/maximal_ansible_version: 2.13.0/maximal_ansible_version: 2.13.3/g' kubespray/ansible_version.yml
 fi
 
-ansible-playbook --become -i "inventory/kubernetes-challengekt/hosts.ini" "kubespray/cluster.yml" |tee ansible_run.txt
-ansible-playbook --become -i "inventory/kubernetes-challengekt/hosts.ini" "custom/custom.yml" |tee custom_run.txt
+ansible-playbook --become -i "inventory/kubernetes-challengekt/hosts.ini" "kubespray/upgrade-cluster.yml" |tee ansible_run.txt
+ansible-playbook --become -i "inventory/kubernetes-challengekt/hosts.ini" "custom.yml" |tee custom_run.txt

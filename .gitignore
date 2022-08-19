@@ -67,6 +67,7 @@ terraform/.terraform.lock.hcl
 terraform/out/*
 ansible/venv/*
 ansible/ansible_run.txt
+ansible/custom_run.txt
 ansible/inventory/kubernetes-challengekt/hosts.ini
 ansible/inventory/kubernetes-challengekt/artifacts/*
 ansible/inventory/kubernetes-challengekt/credentials/*

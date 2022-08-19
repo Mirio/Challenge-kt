@@ -33,7 +33,6 @@ Version: `1.23.7`
 Network Addon: `Calico`
 
 Addons:
-* `Cert Manager`
+* `ArgoCD`
 * `Helm`
-* `Ingress ALB`
 * `Metrics Server`

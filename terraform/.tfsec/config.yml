@@ -2,3 +2,4 @@
 exclude:
   - aws-ec2-no-public-egress-sgr # The target for kubespray is not documented, it can be tuned
   - aws-iam-no-policy-wildcards # Official kubespray policies, it can be tuned
+  - aws-ec2-enforce-http-token-imds # Needed for Kubespray AWS addons support
